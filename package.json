@@ -1,4 +1,10 @@
 {
   "name": "md-links",
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "dependencies": {
+    "commander": "^5.1.0"
+  },
+  "bin": {
+    "md-links": "index.js"
+  }
 }
