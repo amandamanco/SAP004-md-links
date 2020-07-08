@@ -1,10 +1,13 @@
 {
   "name": "md-links",
   "version": "0.1.0",
+  "description": "Library for searching links in .md files",
+  "main": "index.js",
   "dependencies": {
     "commander": "^5.1.0"
   },
   "bin": {
     "md-links": "index.js"
-  }
+  },
+  "author": "Amanda Manço"
 }
