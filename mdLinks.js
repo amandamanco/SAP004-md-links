@@ -11,18 +11,18 @@ const showFiles = (resolve, reject, file) => {
             let array = [];
             result.map((link) => {
                 const linkSplit = link.split(',');
-                //AQUI VOCE PRECISA 
-                linkSplit.forEach(function(link){
-                    let text = link.replace('[', '');
-                    let text1 = text.replace(']', '');
-                   console.log(text1) 
-                   const object = {
-                    file: file,
-                    text:text1,
-                    href:text.replace(')', ''),
-                };
-                array.push(object);
-                });                            
+                linkSplit.forEach(function (link) {
+                    let clearText = link.replace('[', '');
+                    let clearLink = clearText.replace('(', '');
+                    let clearLinkTwo = clearLink.replace(')', '');
+                    let clearAll = clearLinkTwo.split(']');
+                    const object = {
+                        file: file,
+                        text: clearAll[0],
+                        href: clearAll[1],
+                    };
+                    array.push(object);
+                });
                 return resolve(array);
             });
         };
