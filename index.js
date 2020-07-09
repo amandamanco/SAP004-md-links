@@ -1,34 +1,64 @@
-#!/usr/bin/env node
+const fs = require('fs');
+const { join, extname } = require('path');
 
-const mdLinks = require('./mdLinks');
+const showFiles = (resolve, reject, file) => {
+  fs.readFile(file, 'utf8', function (err, data) {
+    if (err) {
+      return reject(`File not found ${err}`);
+    } else {
+      let regex = /(\[.[^[\](\)]*?\])(\([^#].*?\))/gm;
+      const result = data.match(regex);
+      let array = [];
+      result.map((link) => {
+        const linkSplit = link.split(',');
+        linkSplit.forEach(function (link) {
+          let clearText = link.replace('[', '');
+          let clearLink = clearText.replace('(', '');
+          let clearLinkTwo = clearLink.replace(')', '');
+          let clearAll = clearLinkTwo.split(']');
+          const object = {
+            file: file,
+            text: clearAll[0],
+            href: clearAll[1],
+          };
+          array.push(object);
+        });
+        return resolve(array);
+      });
+    };
+  });
+};
 
-mdLinks(process.argv[2])
-.then (array => {
-  if (typeof array === 'undefined' ) {
-    console.log("Não há links aqui");
+const mdLinks = (path) => {
+  if (fs.lstatSync(path).isDirectory()) {
+    return new Promise((resolve, reject) => {
+      fs.readdir(path, function (err, files) {
+        if (err) {
+          return reject(err);
+        } else {
+          const filesMd = files.filter(function (file) {
+            return extname(file) === ".md";
+          });
+          if (filesMd.length === 0) {
+            return reject(`Arquivo não compatível`);
+          } else {
+            filesMd.forEach(function (file) {
+              const directoryPath = join(path, file);
+              showFiles(resolve, reject, directoryPath);
+            });
+          };
+        };
+      });
+    });
   } else {
-    array.forEach(obj => {
-      console.log(`File: ${obj.file} | Text: ${obj.text} | Href: ${obj.href}`);
+    return new Promise((resolve, reject) => {
+      if (extname(path) !== ".md") {
+        return reject(`Arquivo não compatível`);
+      } else {
+        showFiles(resolve, reject, path);
+      };
     });
   };
-})
-.catch (error => console.log(error));
+};
 
-
-// const program = require('commander');
-// const package = require('./package.json');
-// const { join } = require('path');
-// const links = require('./mdLinks');
-// const mdLinks = links.mdLinks();
-
-// const linkDefault = join(__dirname, './README.md');
-
-// program.version(package.version);
-
-// program.arguments('[path]').action(function (path) {
-//   if (typeof path === 'undefined') {
-//     links(linkDefault)
-//     process.exit(1);
-//   }
-//   links(path);
-// });
+module.exports = mdLinks;
