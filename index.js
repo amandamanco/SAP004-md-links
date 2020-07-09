@@ -10,7 +10,7 @@ mdLinks(process.argv[2])
     array.forEach(obj => {
       console.log(`File: ${obj.file} | Text: ${obj.text} | Href: ${obj.href}`);
     });
-  }
+  };
 })
 .catch (error => console.log(error));
 

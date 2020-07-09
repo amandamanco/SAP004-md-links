@@ -6,6 +6,7 @@
   "dependencies": {
     "commander": "^5.1.0"
   },
+  "devDependencies": {},
   "bin": {
     "md-links": "index.js"
   },
