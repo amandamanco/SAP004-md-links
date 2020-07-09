@@ -1,4 +1,19 @@
 {
   "name": "md-links",
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "description": "Library for searching links in .md files",
+  "main": "index.js",
+  "dependencies": {
+    "commander": "^5.1.0"
+  },
+  "devDependencies": {},
+  "bin": {
+    "md-links": "mdLinks.js"
+  },
+  "author": "Amanda Manço",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amandamanco/SAP004-md-links"
+  }
 }
