@@ -1,31 +1,28 @@
 const fs = require('fs');
 const { join, extname } = require('path');
+let array = [];
 
 const showFiles = (resolve, reject, file) => {
   fs.readFile(file, 'utf8', function (err, data) {
     if (err) {
-      return reject(`File not found ${err}`);
+      return reject(`File not found`);
     } else {
       let regex = /(\[.[^[\](\)]*?\])(\([^#].*?\))/gm;
       const result = data.match(regex);
-      let array = [];
-      result.map((link) => {
-        const linkSplit = link.split(',');
-        linkSplit.forEach(function (link) {
-          let clearText = link.replace('[', '');
-          let clearLink = clearText.replace('(', '');
-          let clearLinkTwo = clearLink.replace(')', '');
-          let clearAll = clearLinkTwo.split(']');
-          const object = {
-            file: file,
-            text: clearAll[0],
-            href: clearAll[1],
-          };
-          array.push(object);
-        });
-        return resolve(array);
+      result.map(function (link) {
+        let clearText = link.replace('[', '');
+        let clearLink = clearText.replace('(', '');
+        let clearLinkTwo = clearLink.replace(')', '');
+        let clearAll = clearLinkTwo.split(']');
+        const object = {
+          file: file,
+          text: clearAll[0],
+          href: clearAll[1],
+        };
+        array.push(object);
       });
     };
+    return resolve(array);
   });
 };
 
@@ -40,10 +37,10 @@ const mdLinks = (path) => {
             return extname(file) === ".md";
           });
           if (filesMd.length === 0) {
-            return reject(`Arquivo não compatível`);
+            return reject(`.md files not found`);
           } else {
-            filesMd.forEach(function (file) {
-              const directoryPath = join(path, file);
+            filesMd.forEach(function (files) {
+              const directoryPath = join(path, files);
               showFiles(resolve, reject, directoryPath);
             });
           };
@@ -53,7 +50,7 @@ const mdLinks = (path) => {
   } else {
     return new Promise((resolve, reject) => {
       if (extname(path) !== ".md") {
-        return reject(`Arquivo não compatível`);
+        return reject(`.md file not found`);
       } else {
         showFiles(resolve, reject, path);
       };

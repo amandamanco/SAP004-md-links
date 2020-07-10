@@ -3,11 +3,7 @@
   "version": "0.1.0",
   "description": "Library for searching links in .md files",
   "main": "index.js",
-  "dependencies": {
-    "commander": "^5.1.0"
-  },
-  "devDependencies": {},
-  "bin": {
+   "bin": {
     "md-links": "mdLinks.js"
   },
   "author": "Amanda Manço",
