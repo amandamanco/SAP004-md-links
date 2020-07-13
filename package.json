@@ -3,13 +3,19 @@
   "version": "0.1.0",
   "description": "Library for searching links in .md files",
   "main": "index.js",
-   "bin": {
+  "bin": {
     "md-links": "mdLinks.js"
+  },
+  "scripts": {
+    "test": "jest --coverage "
   },
   "author": "Amanda Manço",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/amandamanco/SAP004-md-links"
+  },
+  "devDependencies": {
+    "jest": "^26.1.0"
   }
 }

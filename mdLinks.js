@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 const mdLinks = require('./index');
 
 mdLinks(process.argv[2])
