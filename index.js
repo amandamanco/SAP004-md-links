@@ -26,6 +26,7 @@ const showFiles = (resolve, reject, file) => {
 };
 
 const mdLinks = (path) => {
+  array = []
   if (fs.lstatSync(path).isDirectory()) {
     return new Promise((resolve, reject) => {
       fs.readdir(path, function (err, files) {
