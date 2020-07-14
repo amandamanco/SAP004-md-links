@@ -32,4 +32,19 @@ describe('mdLinks', () => {
       },
     ]);
   });
+
+  it('should return an link if you find an .md file in the directory', () => {
+    return expect(mdLinks('./test/')).resolves.toEqual([
+      {
+        file: 'test/mockLinks.md',
+        text: 'Github',
+        href: 'https://github.com/',
+      },
+      {
+        file: 'test/mockLinks.md',
+        text: 'Youtube',
+        href: 'https://www.youtube.com/',
+      },
+    ]);
+  });
 });
