@@ -36,8 +36,8 @@ const mdLinks = (path) => {
         if (filesMd.length === 0) {
           return reject(`.md files not found in this directory`);
         } else {
-          filesMd.map(function (files) {
-            const replaceDirectory = join(path, files);
+          filesMd.map(function (file) {
+            const replaceDirectory = join(path, file);
             const directoryPath = replaceDirectory.replace("\\", "/");
             showFiles(resolve, reject, directoryPath);
           });
